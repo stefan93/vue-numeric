@@ -161,11 +161,17 @@ export default {
       type: String,
       default: 'prefix',
       required: false
+    },
+    initialValue: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
 
   data: () => ({
-    amount: ''
+    amount: '',
+    realValue: 0
   }),
 
   computed: {
@@ -217,6 +223,9 @@ export default {
   },
 
   watch: {
+    value (newValue) {
+      this.realValue = newValue;
+    },
     /**
      * Watch for value change from other input with same v-model.
      * @param {Number} newValue
@@ -266,6 +275,7 @@ export default {
   },
 
   mounted () {
+    this.realValue = this.initialValue;
     // Set default value props when placeholder undefined.
     if (!this.placeholder) {
       this.process(this.valueNumber)
